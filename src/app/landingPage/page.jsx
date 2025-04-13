@@ -18,36 +18,347 @@ import {
   Accordion,
   AccordionItem,
 } from "react-accessible-accordion";
-
-const dropDownOptions = [
+import styles from "./WebPLPWithFilterPage.module.css";
+// Extracted reusable constants
+const DROPDOWN_OPTIONS = [
   { label: "Recommended", value: "Recommended" },
   { label: "Newest First", value: "Newest First" },
   { label: "Popular", value: "Popular" },
   { label: "High to Low", value: "High to Low" },
-  { label: "Low to High", value: "Low to High" },
+  { label: "Low to High", value: "Low to Low" },
 ];
+
+// Filter categories data
+const FILTER_CATEGORIES = [
+  { id: 0, title: "IDEAL FOR", expanded: true },
+  { id: 1, title: "COLOR", expanded: false },
+  { id: 2, title: "SIZE", expanded: false },
+  { id: 3, title: "PRICE", expanded: false },
+  { id: 4, title: "MATERIAL", expanded: false },
+  { id: 5, title: "BRAND", expanded: false },
+  { id: 6, title: "STYLE", expanded: false },
+  { id: 7, title: "SEASON", expanded: false },
+];
+
+// // Sample product data
+// const PRODUCTS = [
+//   {
+//     id: 1,
+//     name: "Product Name",
+//     imageFront: "img_front_pic.png",
+//     imageHover: "img_hover_pic.png",
+//     isNew: true,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 2,
+//     name: "Product Name",
+//     imageFront: "img_front_pic_399x300.png",
+//     imageHover: "img_hover_pic_399x300.png",
+//     isNew: false,
+//     inStock: false,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 3,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438.png",
+//     imageHover: "img_rectangle_29438.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: true,
+//   },
+//   {
+//     id: 4,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_399x300.png",
+//     imageHover: "img_rectangle_29438_399x300.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 5,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_1.png",
+//     imageHover: "img_rectangle_29438_1.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 6,
+//     name: "Product Name",
+//     imageFront: "img_hover_pic_399x300.png",
+//     imageHover: "img_hover_pic_399x300.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 7,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_2.png",
+//     imageHover: "img_rectangle_29438_2.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 8,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_3.png",
+//     imageHover: "img_rectangle_29438_3.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 9,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_4.png",
+//     imageHover: "img_rectangle_29438_4.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 10,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_5.png",
+//     imageHover: "img_rectangle_29438_5.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 11,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_6.png",
+//     imageHover: "img_rectangle_29438_6.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 12,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_7.png",
+//     imageHover: "img_rectangle_29438_7.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   // More products to complete the grid
+//   {
+//     id: 13,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438.png",
+//     imageHover: "img_rectangle_29438.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 14,
+//     name: "Product Name",
+//     imageFront: "img_front_pic_399x300.png",
+//     imageHover: "img_front_pic_399x300.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 15,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_399x300.png",
+//     imageHover: "img_rectangle_29438_399x300.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 16,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_4.png",
+//     imageHover: "img_rectangle_29438_4.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 17,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_1.png",
+//     imageHover: "img_rectangle_29438_1.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+//   {
+//     id: 18,
+//     name: "Product Name",
+//     imageFront: "img_rectangle_29438_7.png",
+//     imageHover: "img_rectangle_29438_7.png",
+//     isNew: false,
+//     inStock: true,
+//     isFavorited: false,
+//   },
+// ];
+
+const ProductCard = ({ product }) => {
+  const { title, price, image, description, rating, category } = product;
+
+  return (
+    <div className={styles.productCard}>
+      <div className={styles.productCard__imageContainer}>
+        <img
+          src={`${image}`}
+          alt={title}
+          className={styles.productCard__image}
+        />
+      </div>
+
+      <div className={styles.productCard__rating}>
+        <span style={{ color: "blue" }}>{rating.rate}</span>
+        <span style={{ color: "gold" }}>
+          {"⭐".repeat(Math.round(rating.rate))}
+        </span>
+        <span style={{ color: "blue" }}>({rating.count} reviews)</span>
+      </div>
+
+      <div className={styles.productCard__details}>
+        <div className={styles.productCard__info}>
+          <Heading as="h6" className={styles.productCard__name}>
+            {title}
+          </Heading>
+          <Text as="p" className={styles.productCard__category}>
+            {category}
+          </Text>
+          <Text as="p" className={styles.productCard__description}>
+            {description}
+          </Text>
+          <div className={styles.productCard__price}>
+            <Text as="span" className={styles.productCard__priceAmount}>
+              ${price}
+            </Text>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const FilterAccordion = ({ category, index }) => {
+  return (
+    <AccordionItem uuid={index} key={`expandablelist${index}`}>
+      <div className={styles.filterAccordion}>
+        <AccordionItemHeading className="w-full">
+          <AccordionItemButton>
+            <AccordionItemState>
+              {(props) => (
+                <div className={styles.filterAccordion__headingContainer}>
+                  <Heading as="h2" className={styles.filterAccordion__heading}>
+                    {category.title}
+                  </Heading>
+                  <Img
+                    src="img_checkmark.svg"
+                    width={16}
+                    height={16}
+                    alt="checkmark"
+                    className={styles.filterAccordion__checkmark}
+                  />
+                </div>
+              )}
+            </AccordionItemState>
+          </AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel>
+          {category.title === "IDEAL FOR" && (
+            <div
+              className={`${styles.filterAccordion__panel} md:${styles.filterAccordion__panelFullWidth}`}
+            >
+              <Text size="lg" as="p" className={styles.filterAccordion__textLg}>
+                All
+              </Text>
+              <Text size="md" as="p" className={styles.filterAccordion__textMd}>
+                Unselect all
+              </Text>
+              <CheckBox
+                name="men"
+                label="Men"
+                id="men"
+                className={styles.filterAccordion__checkBoxLabel}
+              />
+              <CheckBox
+                name="women"
+                label="Women"
+                id="women"
+                className={styles.filterAccordion__checkBoxLabel}
+              />
+              <CheckBox
+                name="babykids"
+                label="Baby & Kids"
+                id="babykids"
+                className={`${styles.filterAccordion__checkBoxLabel} self-stretch`}
+              />
+            </div>
+          )}
+        </AccordionItemPanel>
+      </div>
+      <div className={styles.filterAccordion__divider} />
+    </AccordionItem>
+  );
+};
+
+
 
 export default function WebPLPWithFilterPage() {
   const [isFilterVisible, setIsFilterVisible] = useState(true);
-
   const [menuPortalTarget, setMenuPortalTarget] = useState(null);
+  const [selectedSort, setSelectedSort] = useState("Recommended");
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const target = document.getElementById("menuPortalTarget");
     setMenuPortalTarget(target);
+
+    const fetchProducts = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("https://fakestoreapi.com/products");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const data = await response.json();
+        setProducts(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setIsLoading(false);  // Ensure loading state is reset in case of error
+      }
+    };
+
+    fetchProducts();
   }, []);
+
   const handleFilterClick = () => {
     setIsFilterVisible(!isFilterVisible);
   };
 
   return (
     <div className="flex w-full flex-col items-center gap-[58px] bg-white-A700 sm:gap-[29px]">
-      {/* header section */}
+      <div id="menuPortalTarget" />
+
+      {/* Header section */}
       <Header className="self-stretch" />
 
-      {/* hero section */}
+      {/* Hero section */}
       <div className="container-xs md:p-5">
         <div className="flex flex-col items-center gap-[72px] md:gap-[54px] sm:gap-9">
+          {/* Title section */}
           <div className="flex w-[58%] flex-col items-center gap-[19px] md:w-full">
             <Text
               size="2xl"
@@ -66,14 +377,18 @@ export default function WebPLPWithFilterPage() {
               dolor.
             </Text>
           </div>
+
+          {/* Products section */}
           <div className="flex flex-col gap-8 self-stretch">
+            {/* Filter and Sort Bar */}
             <div>
               <div className="flex items-start justify-between gap-5 border-b-[0.5px] border-solid border-gray-300 bg-white-A700 py-6 pr-6 sm:flex-col sm:py-5 sm:pr-5">
                 <div className="flex w-[25%] items-start justify-between gap-5 sm:w-full">
                   <Heading as="h1" className="mt-[7px] uppercase">
-                    3425 Items
+                    {products.length} Items
                   </Heading>
-                  {/* Filter section */}
+
+                  {/* Filter toggle button */}
                   <div className="relative h-[40px] w-[43%]">
                     <div className="absolute bottom-0 left-0 right-0 top-0 m-auto flex h-max w-full bg-white-A700 py-3">
                       <Img
@@ -94,8 +409,9 @@ export default function WebPLPWithFilterPage() {
                     </Text>
                   </div>
                 </div>
+
+                {/* Sort dropdown */}
                 <SelectBox
-                  // menuPortalTarget={document.getElementById("menuPortalTarget")}
                   menuPortalTarget={menuPortalTarget}
                   shape="square"
                   indicator={
@@ -107,14 +423,19 @@ export default function WebPLPWithFilterPage() {
                       className="h-[16px] w-[16px]"
                     />
                   }
-                  name="recommended"
-                  placeholder={`Recommended`}
-                  options={dropDownOptions}
-                  className="mr-3 mt-[7px] w-[20%] gap-px font-bold uppercase text-gray-900 sm:mr-0 sm:w-full sm:pr-5"
+                  name="sortDropdown"
+                  placeholder={selectedSort}
+                  options={DROPDOWN_OPTIONS}
+                  value={selectedSort}
+                  onChange={(value) => setSelectedSort(value)}
+                  className="mr-3 mt-[7px] w-[20%] gap-px font-bold uppercase text-blue-900 sm:mr-0 sm:w-full sm:pr-5"
                 />
               </div>
             </div>
+
+            {/* Products with filters grid */}
             <div className="flex items-start gap-4 md:flex-col">
+              {/* Filter sidebar */}
               {isFilterVisible && (
                 <div className="flex w-[24%] flex-col gap-[21px] md:w-full">
                   <CheckBox
@@ -129,728 +450,37 @@ export default function WebPLPWithFilterPage() {
                       preExpanded={[0]}
                       className="flex flex-col gap-[25px]"
                     >
-                      {[...Array(8)].map((_, i) => (
-                        <AccordionItem uuid={i} key={`expandablelisti${i}`}>
-                          <div className="flex flex-1 flex-col gap-2">
-                            <AccordionItemHeading className="w-full">
-                              <AccordionItemButton>
-                                <AccordionItemState>
-                                  {(props) => (
-                                    <>
-                                      <div className="flex flex-wrap items-center justify-between gap-5">
-                                        <Heading as="h2" className="uppercase">
-                                          IDEAL FOR
-                                        </Heading>
-                                        {props?.expanded ? (
-                                          <Img
-                                            src="img_checkmark.svg"
-                                            width={16}
-                                            height={16}
-                                            alt="checkmark"
-                                            className="h-[16px] w-[16px] self-end"
-                                          />
-                                        ) : (
-                                          <Img
-                                            src="img_checkmark.svg"
-                                            width={16}
-                                            height={16}
-                                            alt="checkmark"
-                                            className="h-[16px] w-[16px] self-end"
-                                          />
-                                        )}
-                                      </div>
-                                    </>
-                                  )}
-                                </AccordionItemState>
-                              </AccordionItemButton>
-                            </AccordionItemHeading>
-                            <AccordionItemPanel>
-                              <div className="relative mt-[-22px] flex w-[35%] flex-col items-start gap-[23px] md:w-full">
-                                <Text
-                                  size="lg"
-                                  as="p"
-                                  className="!text-gray-900"
-                                >
-                                  All
-                                </Text>
-                                <Text
-                                  size="md"
-                                  as="p"
-                                  className="!text-blue_gray-200 underline"
-                                >
-                                  Unselect all
-                                </Text>
-                                <CheckBox
-                                  name="men"
-                                  label="Men"
-                                  id="men"
-                                  className="gap-2 p-px text-left text-base text-gray-900"
-                                />
-                                <CheckBox
-                                  name="women"
-                                  label="Women"
-                                  id="women"
-                                  className="gap-2 p-px text-left text-base text-gray-900"
-                                />
-                                <CheckBox
-                                  name="babykids"
-                                  label="Baby & Kids"
-                                  id="babykids"
-                                  className="gap-2 self-stretch text-left text-base text-gray-900"
-                                />
-                              </div>
-                            </AccordionItemPanel>
-                          </div>
-                          <div className="h-px w-full rotate-[0deg] bg-gray-300" />
-                        </AccordionItem>
+                      {FILTER_CATEGORIES.map((category, index) => (
+                        <FilterAccordion
+                          key={category.id}
+                          category={category}
+                          index={index}
+                        />
                       ))}
                     </Accordion>
                   </div>
                 </div>
               )}
 
-              {/* products section */}
+              {/* Product grid */}
               <div className="grid flex-1 grid-cols-3 gap-4 md:grid-cols-2 md:self-stretch sm:grid-cols-1">
-                <div className="flex w-full flex-col">
-                  <div className="flex flex-col">
-                    <div className="relative h-[399px] md:h-auto">
-                      <Img
-                        src="img_hover_pic.png"
-                        width={300}
-                        height={399}
-                        alt="productimage"
-                        className="h-[399px] w-full object-cover"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 top-0 m-auto h-[399px] w-full md:h-auto">
-                        <Img
-                          src="img_front_pic.png"
-                          width={300}
-                          height={399}
-                          alt="productimage"
-                          className="h-[399px] w-full object-cover"
-                        />
-                        <Heading
-                          size="xs"
-                          as="h3"
-                          className="absolute left-[20.00px] top-[10.60px] m-auto uppercase !text-black-900"
-                        >
-                          new product
-                        </Heading>
-                      </div>
-                    </div>
-                    <div className="flex self-start bg-white-A700 pt-3.5">
-                      <div className="flex flex-col items-start gap-0.5">
-                        <Heading as="h4" className="uppercase">
-                          Product Name
-                        </Heading>
-                        <div className="flex items-start gap-[25px]">
-                          <Text as="p" className="underline">
-                            <span className="text-blue_gray-400">Sign in</span>
-                            <span className="text-blue_gray-400">
-                              &nbsp;or Create an account to see pricing
-                            </span>
-                          </Text>
-                          <Img
-                            src="img_favorite.svg"
-                            width={24}
-                            height={24}
-                            alt="signinimage"
-                            className="h-[24px] w-[24px]"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                {isLoading ? (
+                  <div className="loading-container flex justify-center items-center">
+                    <h1 className="loading-text text-lg">Loading...</h1>
+                    <div className="spinner"></div>
                   </div>
-                </div>
-                <div className="flex w-full flex-col">
-                  <div>
-                    <div className="relative h-[399px] md:h-auto">
-                      <Img
-                        src="img_hover_pic_399x300.png"
-                        width={300}
-                        height={399}
-                        alt="hoverpic"
-                        className="h-[399px] w-full object-cover"
-                      />
-                      <div className="absolute bottom-0 left-0 right-0 top-0 m-auto h-[399px] w-full md:h-auto">
-                        <Img
-                          src="img_front_pic_399x300.png"
-                          width={300}
-                          height={399}
-                          alt="frontpic"
-                          className="h-[399px] w-full object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 top-0 m-auto h-[399px] w-full md:h-auto">
-                          <Img
-                            src="img_hover_pic_399x300.png"
-                            width={300}
-                            height={399}
-                            alt="hoverpic"
-                            className="h-[399px] w-full object-cover"
-                          />
-                          <div className="absolute bottom-0 left-0 right-0 top-0 m-auto h-[399px] w-full md:h-auto">
-                            <Img
-                              src="img_front_pic_399x300.png"
-                              width={300}
-                              height={399}
-                              alt="frontpic"
-                              className="h-[399px] w-full object-cover"
-                            />
-                            <div className="absolute bottom-0 left-0 right-0 top-0 m-auto h-max w-full bg-white-A700_7f py-[163px] md:py-5">
-                              <Button
-                                color="white_A700"
-                                size="sm"
-                                shape="square"
-                                className="w-full font-bold sm:px-5"
-                              >
-                                out of stock
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex flex-col items-start">
-                        <div className="flex flex-col items-start gap-0.5 self-stretch bg-white-A700 pt-3.5">
-                          <Heading as="h5" className="uppercase">
-                            Product Name
-                          </Heading>
-                          <Img
-                            src="img_favorite.svg"
-                            width={24}
-                            height={24}
-                            alt="favorite"
-                            className="h-[24px] w-[24px] self-end"
-                          />
-                        </div>
-                        <Text as="p" className="relative mt-[-16px] underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                      </div>
-                      <div className="relative mt-[-63px] flex flex-col items-start">
-                        <div className="flex flex-col items-start gap-0.5 self-stretch bg-white-A700 pt-3.5">
-                          <Heading as="h6" className="uppercase">
-                            Product Name
-                          </Heading>
-                          <Img
-                            src="img_favorite.svg"
-                            width={24}
-                            height={24}
-                            alt="favorite"
-                            className="h-[24px] w-[24px] self-end"
-                          />
-                        </div>
-                        <Text as="p" className="relative mt-[-16px] underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite_pink_400.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_399x300.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex flex-col items-start gap-0.5">
-                    <Heading as="h6" className="uppercase">
-                      Product Name
-                    </Heading>
-                    <div className="flex items-start gap-[25px]">
-                      <Text as="p" className="underline">
-                        <span className="text-blue_gray-400">Sign in</span>
-                        <span className="text-blue_gray-400">
-                          &nbsp;or Create an account to see pricing
-                        </span>
-                      </Text>
-                      <Img
-                        src="img_favorite.svg"
-                        width={24}
-                        height={24}
-                        alt="favorite"
-                        className="h-[24px] w-[24px]"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_1.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_hover_pic_399x300.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_2.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_3.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex flex-col items-start gap-0.5">
-                    <Heading as="h6" className="uppercase">
-                      Product Name
-                    </Heading>
-                    <div className="flex items-start gap-[25px]">
-                      <Text as="p" className="underline">
-                        <span className="text-blue_gray-400">Sign in</span>
-                        <span className="text-blue_gray-400">
-                          &nbsp;or Create an account to see pricing
-                        </span>
-                      </Text>
-                      <Img
-                        src="img_favorite.svg"
-                        width={24}
-                        height={24}
-                        alt="favorite"
-                        className="h-[24px] w-[24px]"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_4.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_5.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_6.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_7.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_front_pic_399x300.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_399x300.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_4.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_1.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex flex-col items-start gap-0.5">
-                    <Heading as="h6" className="uppercase">
-                      Product Name
-                    </Heading>
-                    <div className="flex items-start gap-[25px]">
-                      <Text as="p" className="underline">
-                        <span className="text-blue_gray-400">Sign in</span>
-                        <span className="text-blue_gray-400">
-                          &nbsp;or Create an account to see pricing
-                        </span>
-                      </Text>
-                      <Img
-                        src="img_favorite.svg"
-                        width={24}
-                        height={24}
-                        alt="favorite"
-                        className="h-[24px] w-[24px]"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3.5">
-                  <Img
-                    src="img_rectangle_29438_7.png"
-                    width={300}
-                    height={399}
-                    alt="image"
-                    className="h-[399px] object-cover"
-                  />
-                  <div className="flex self-start">
-                    <div className="flex flex-col items-start gap-0.5">
-                      <Heading as="h6" className="uppercase">
-                        Product Name
-                      </Heading>
-                      <div className="flex items-start gap-[25px]">
-                        <Text as="p" className="underline">
-                          <span className="text-blue_gray-400">Sign in</span>
-                          <span className="text-blue_gray-400">
-                            &nbsp;or Create an account to see pricing
-                          </span>
-                        </Text>
-                        <Img
-                          src="img_favorite.svg"
-                          width={24}
-                          height={24}
-                          alt="favorite"
-                          className="h-[24px] w-[24px]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                ) : (
+                  products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* footer section */}
+      {/* Footer section */}
       <Footer className="flex items-end justify-center self-stretch bg-black-900 p-6 sm:p-5" />
     </div>
   );

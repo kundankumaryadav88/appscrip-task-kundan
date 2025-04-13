@@ -1,0 +1,310 @@
+.productCard {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 10px;
+    background-color : rgb(239, 237, 241);
+    border-radius: 20px;
+  }
+  
+  .productCard__imageContainer {
+    display: flex;
+    position: relative;
+    height: 399px;
+    width: 100%;
+  }
+  
+  .productCard__image {
+    height: 399px;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .productCard__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: 399px;
+    width: 100%;
+  }
+  
+  .productCard__newProduct {
+    position: absolute;
+    top: 10.6px;
+    left: 20px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: #000;
+  }
+  
+  .productCard__outOfStockOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding-top: 163px;
+    padding-bottom: 163px;
+  }
+  
+  .productCard__button {
+    width: 100%;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: white;
+  }
+  
+  .productCard__details {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .productCard__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .productCard__name {
+    text-transform: uppercase;
+  }
+  
+  .productCard__priceSignIn {
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+  }
+  
+  .productCard__favorite {
+    height: 24px;
+    width: 24px;
+  }
+
+  .filterAccordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filterAccordion__headingContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+  
+  .filterAccordion__heading {
+    text-transform: uppercase;
+  }
+  
+  .filterAccordion__checkmark {
+    height: 16px;
+    width: 16px;
+    align-self: flex-end;
+  }
+  
+  .filterAccordion__panel {
+    margin-top: -22px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4375rem;
+    width: 35%;
+    align-items: flex-start;
+  }
+  
+  .filterAccordion__panelFullWidth {
+    width: 100%;
+  }
+  
+  .filterAccordion__textLg {
+    color: #1f2937; 
+  }
+  
+  .filterAccordion__textMd {
+    color: #4b5563; 
+    text-decoration: underline;
+  }
+  
+  .filterAccordion__checkBoxLabel {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.0625rem;
+    font-size: 1rem;
+    color: #1f2937;
+    text-align: left;
+  }
+  
+  .filterAccordion__divider {
+    height: 1px;
+    width: 100%;
+    background-color: #d1d5db; 
+    transform: rotate(0deg);
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 58px;
+    background-color: #ffffff; 
+  }
+  
+  .header {
+    width: 100%;
+  }
+  
+  .heroSection {
+    width: 100%;
+    padding: 1.25rem; 
+  }
+  
+  .heroTitleSection {
+    display: flex;
+    width: 58%;
+    flex-direction: column;
+    align-items: center;
+    gap: 19px;
+  }
+  
+  .heroTitle {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1f2937; 
+  }
+  
+  .heroSubtitle {
+    text-align: center;
+    line-height: 2.5rem; 
+    color: #1f2937;
+  }
+  
+  .filterSortSection {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+    border-bottom: 0.5px solid #d1d5db; 
+    background-color: #ffffff;
+    padding: 1.5rem;
+  }
+  
+  .filterSortSectionMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem 0.75rem;
+  }
+  
+  .filterSortHeading {
+    text-transform: uppercase;
+    margin-top: 7px;
+  }
+  
+  .filterToggleButton {
+    position: relative;
+    height: 40px;
+    width: 43%;
+  }
+  
+  .filterToggleText {
+    position: absolute;
+    right: 0;
+    top: 9.25px;
+    text-align: right;
+    font-family: 'Adobe Caslon Pro', serif;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .sortDropdown {
+    width: 20%;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1f2937; 
+    margin-right: 0.75rem;
+  }
+  
+  .sortDropdownMobile {
+    width: 100%;
+    padding-right: 1.25rem;
+  }
+  
+  .productGridContainer {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .filterSidebar {
+    display: flex;
+    width: 24%;
+    flex-direction: column;
+    gap: 1.3125rem;
+  }
+  
+  .filterSidebarMobile {
+    width: 100%;
+  }
+  
+  .filterPanelDivider {
+    height: 1px;
+    background-color: #d1d5db; 
+  }
+  
+  .productGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  .productGridMobile {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
+  
+  
+  .productCard__priceAmount{
+    color: #000;
+  }
+
+
+  .loading-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+    height: 100%;            
+    width: 100%;
+    background-color: #3498db;             
+  }
+  
+  .loading-text {
+    font-size: 1.125rem; 
+    color: #4b5563; 
+    font-weight: bold; 
+  }
+  
+
+  .spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
