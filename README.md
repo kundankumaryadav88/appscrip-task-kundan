@@ -66,6 +66,12 @@ This is the solution for the Appscrip task, built using **Next.js** and styled w
     npm run start
     ```
 
+## Data Source
+
+The data for the product listing is fetched from the following API:
+
+- [https://fakestoreapi.com/products](https://fakestoreapi.com/products)
+
 ## Folder Structure
 
 ```
