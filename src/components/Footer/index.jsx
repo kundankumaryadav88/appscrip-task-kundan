@@ -286,7 +286,7 @@ export default function Footer({ ...props }) {
           </div>
         </div>
         <Text as="p" className="text-center !text-white-A700">
-          Copyright © 2023 mettamuse. All rights reserved.
+          Copyright © 2025 mettamuse. All rights reserved.
         </Text>
       </div>
     </footer>
